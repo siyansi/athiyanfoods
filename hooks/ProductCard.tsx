@@ -30,7 +30,7 @@ export function ProductCard({
 
         <div className="flex h-44 w-full items-center justify-center overflow-hidden rounded-xl bg-white p-2">
           <img
-            src={productImage(product.img)}
+            src={productImage(product.img)?.src}
             alt={product.name}
             loading="lazy"
             width={300}
