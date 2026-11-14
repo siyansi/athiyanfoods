@@ -1,17 +1,20 @@
+
 "use client";
 
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import {
-  MessageCircle,
-  MapPin,
-  Phone,
-  Factory,
+  ArrowRight,
+  ArrowUpRight,
   Building2,
+  Clock3,
+  Factory,
+  MapPin,
+  MessageCircle,
   Navigation,
+  Phone,
   Send,
-  Clock,
-  Sparkles,
 } from "lucide-react";
+
 import { units } from "@/lib/catlog";
 import {
   waLink,
@@ -22,327 +25,429 @@ import {
 } from "@/lib/contact";
 import { Reveal } from "@/hooks/Reveal";
 
+const showroomAddress =
+  "33/1, Krishnarayapuram, Avarampalayam Main Road, Coimbatore, Tamil Nadu 641006, India";
+
+const factoryAddress =
+  "42B, Chinthamani Nagar, Avarampalayam, Coimbatore, Tamil Nadu 641006, India";
+
+const locations = [
+  {
+    title: "Showroom",
+    address:
+      "33/1, Krishnarayapuram, Avarampalayam Main Road, Coimbatore – 641 006.",
+    map: `https://www.google.com/maps?q=${encodeURIComponent(showroomAddress)}&output=embed`,
+    direction: MAPS_LINK,
+    icon: Building2,
+  },
+  {
+    title: "Manufacturing Unit",
+    address:
+      "42B, Chinthamani Nagar, Avarampalayam, Coimbatore – 641 006.",
+    map: `https://www.google.com/maps?q=${encodeURIComponent(factoryAddress)}&output=embed`,
+    direction: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(factoryAddress)}`,
+    icon: Factory,
+  },
+];
+
 export default function ContactPage() {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [machine, setMachine] = useState("");
   const [message, setMessage] = useState("");
 
-  const submit = (e: React.FormEvent) => {
+  const submit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     const lines = [
       "Hello Athiyan Food Machines!",
-      name && `Name: ${name}`,
-      phone && `Phone: ${phone}`,
+      `Name: ${name}`,
+      `Phone: ${phone}`,
       machine && `Machine interested in: ${machine}`,
       message && `Requirement: ${message}`,
     ].filter(Boolean);
-    window.open(waLink(lines.join("\n")), "_blank");
+
+    window.open(waLink(lines.join("\n")), "_blank", "noopener,noreferrer");
   };
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[#f8fafc]">
-      {/* Background ambient glass glow blobs */}
-      <div
-        className="pointer-events-none absolute -top-40 -right-40 h-[500px] w-[500px] rounded-full bg-brand/10 blur-[120px]"
-        aria-hidden
-      />
-      <div
-        className="pointer-events-none absolute top-1/3 -left-40 h-[450px] w-[450px] rounded-full bg-steel-dark/10 blur-[130px]"
-        aria-hidden
-      />
+    <main className="min-h-screen overflow-hidden bg-[#fafafa] text-[#171717]">
 
-      {/* Hero Header */}
-      <section className="relative px-4 pt-8 pb-12 sm:px-6 lg:px-8">
-        <div className="relative mx-auto max-w-7xl overflow-hidden rounded-[2.5rem] border border-white/50 bg-gradient-to-br from-steel-dark via-[#1e293b] to-steel-dark p-8 shadow-[0_20px_50px_-20px_rgba(15,23,42,0.4)] backdrop-blur-2xl md:p-14">
-          <div
-            className="pointer-events-none absolute inset-0 opacity-20"
-            style={{
-              backgroundImage:
-                "radial-gradient(circle at 2px 2px, rgba(255,255,255,0.2) 1px, transparent 0)",
-              backgroundSize: "28px 28px",
-            }}
-          />
+      {/* MAIN CONTACT CONTAINER */}
+      <section className="relative mx-auto max-w-[1440px] px-4 pb-12 pt-24 sm:px-6 lg:px-10 lg:pb-16 lg:pt-28">
+
+        {/* Subtle background */}
+        <div className="pointer-events-none absolute right-0 top-20 -z-0 h-72 w-72 rounded-full bg-red-100/70 blur-[100px]" />
+        <div className="pointer-events-none absolute bottom-0 left-0 -z-0 h-72 w-72 rounded-full bg-rose-100/60 blur-[100px]" />
+
+        <div className="relative z-10">
+
+          {/* HEADER */}
           <Reveal>
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3.5 py-1.5 text-xs font-semibold text-brand-soft backdrop-blur-md">
-              <Sparkles className="h-3.5 w-3.5 text-brand" />
-              Direct Factory Assistance
-            </div>
-            <h1 className="mt-4 font-display text-4xl font-extrabold tracking-tight text-white md:text-5xl lg:text-6xl">
-              Connect with <span className="text-brand">Athiyan</span>
-            </h1>
-            <p className="mt-4 max-w-2xl text-sm leading-relaxed text-slate-300 md:text-base">
-              From machinery sizing and custom stainless steel fabrication to
-              doorstep installation and training — our engineering team in
-              Coimbatore is ready to power your production.
-            </p>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* Main Content Area */}
-      <section className="relative mx-auto max-w-7xl px-4 pb-24 sm:px-6 lg:px-8">
-        {/* Contact Cards Grid */}
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {/* Phone Card */}
-          <Reveal delay={60}>
-            <div className="group relative flex h-full flex-col justify-between rounded-3xl border border-white/70 bg-white/70 p-6 shadow-[0_10px_30px_-15px_rgba(0,0,0,0.06)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-brand/30 hover:bg-white/90 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.12)]">
-              <div>
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-soft/80 text-brand transition-transform duration-300 group-hover:scale-110">
-                  <Phone className="h-5 w-5" />
+            <div className="mb-8 flex flex-col justify-between gap-6 lg:mb-10 lg:flex-row lg:items-end">
+              <div className="max-w-2xl">
+                <div className="inline-flex items-center gap-2 rounded-full border border-red-100 bg-red-50 px-3.5 py-2 text-[11px] font-bold uppercase tracking-[0.16em] text-red-600">
+                  <span className="h-2 w-2 rounded-full bg-red-500" />
+                  Contact Athiyan
                 </div>
-                <h3 className="mt-5 font-display text-base font-bold text-steel-dark">
-                  Direct Lines
-                </h3>
-                <p className="mt-1 text-xs text-slate-500">
-                  Call our technical sales reps
+
+                <h1 className="mt-5 text-4xl font-bold leading-[1.12] tracking-tight text-[#171717] sm:text-5xl lg:text-[58px]">
+                  Let's Talk About
+                  <span className="block text-red-600">
+                    Your Requirements.
+                  </span>
+                </h1>
+
+                <p className="mt-4 max-w-xl text-sm leading-7 text-slate-500 sm:text-base">
+                  Have a machinery requirement? Connect with our team for
+                  product details, pricing, specifications and assistance.
+                  We're ready to help your food business.
                 </p>
-                <div className="mt-4 space-y-2 text-sm font-semibold text-steel-dark">
-                  <div>
-                    <a
-                      href="tel:+919361953377"
-                      className="transition-colors hover:text-brand"
-                    >
+              </div>
+
+              <a
+                href={waLink("Hello Athiyan Food Machines! I have a machinery enquiry.")}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex w-fit items-center gap-3 rounded-full bg-red-600 px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-red-600/20 transition-all duration-300 hover:-translate-y-1 hover:bg-red-700"
+              >
+                <MessageCircle size={18} />
+                WhatsApp Us
+                <ArrowUpRight
+                  size={16}
+                  className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"
+                />
+              </a>
+            </div>
+          </Reveal>
+
+          {/* CONTACT INFORMATION STRIP */}
+          <div className="mb-7 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+
+            {/* PHONE */}
+            <Reveal delay={50}>
+              <div className="flex h-full gap-4 rounded-2xl border border-slate-200 bg-white p-5 transition-all duration-300 hover:-translate-y-1 hover:border-red-200 hover:shadow-lg hover:shadow-red-100/50">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-red-50 text-red-600">
+                  <Phone size={20} />
+                </div>
+
+                <div className="min-w-0">
+                  <h3 className="text-sm font-bold text-[#171717]">
+                    Phone Numbers
+                  </h3>
+
+                  <div className="mt-2 space-y-1.5 text-xs font-semibold text-slate-600">
+                    <a href="tel:+919361953377" className="block hover:text-red-600">
                       {PHONE_DISPLAY}
                     </a>
-                  </div>
-                  <div>
-                    <a
-                      href="tel:+919566195377"
-                      className="transition-colors hover:text-brand"
-                    >
+                    <a href="tel:+919566195377" className="block hover:text-red-600">
                       {PHONE_ALT_DISPLAY}
                     </a>
-                  </div>
-                  <div>
-                    <a
-                      href="tel:+919514553377"
-                      className="transition-colors hover:text-brand"
-                    >
+                    <a href="tel:+919514553377" className="block hover:text-red-600">
                       {PHONE_3RD_DISPLAY}
                     </a>
                   </div>
+
+                  <p className="mt-3 flex items-center gap-1.5 text-[10px] text-slate-400">
+                    <Clock3 size={12} />
+                    9 AM – 7:30 PM (Mon–Sat)
+                  </p>
                 </div>
               </div>
-              <div className="mt-5 flex items-center gap-1.5 text-[11px] font-semibold text-slate-400">
-                <Clock className="h-3.5 w-3.5" />
-                9:00 AM – 7:30 PM (Mon–Sat)
-              </div>
-            </div>
-          </Reveal>
+            </Reveal>
 
-          {/* WhatsApp Card */}
-          <Reveal delay={120}>
-            <div className="group relative flex h-full flex-col justify-between rounded-3xl border border-emerald-100 bg-emerald-50/50 p-6 shadow-[0_10px_30px_-15px_rgba(37,211,102,0.1)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-emerald-300 hover:bg-emerald-50/80 hover:shadow-[0_20px_40px_-15px_rgba(37,211,102,0.2)]">
-              <div>
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500 text-white shadow-md shadow-emerald-500/25 transition-transform duration-300 group-hover:scale-110">
-                  <MessageCircle className="h-5 w-5" />
-                </div>
-                <h3 className="mt-5 font-display text-base font-bold text-steel-dark">
-                  Instant WhatsApp
-                </h3>
-                <p className="mt-2 text-xs leading-relaxed text-slate-600">
-                  Get quick quotes, machinery specs, videos, and factory price
-                  lists directly in chat.
-                </p>
-              </div>
-              <div className="mt-5">
-                <a
-                  href={waLink("Hello Athiyan Food Machines!")}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-[#25D366] px-4 py-2.5 text-xs font-bold text-white shadow-md shadow-emerald-500/20 transition-all hover:bg-[#20ba59]"
-                >
-                  <MessageCircle className="h-4 w-4" />
-                  Chat with Sales
-                </a>
-              </div>
-            </div>
-          </Reveal>
-
-          {/* Showroom Card */}
-          <Reveal delay={180}>
-            <div className="group relative flex h-full flex-col justify-between rounded-3xl border border-white/70 bg-white/70 p-6 shadow-[0_10px_30px_-15px_rgba(0,0,0,0.06)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-brand/30 hover:bg-white/90 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.12)]">
-              <div>
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-100 text-steel-dark transition-transform duration-300 group-hover:scale-110">
-                  <Building2 className="h-5 w-5" />
-                </div>
-                <h3 className="mt-5 font-display text-base font-bold text-steel-dark">
-                  Showroom
-                </h3>
-                <p className="mt-2 text-xs leading-relaxed text-slate-600">
-                  33/1, Krishnarayapuram, Avarampalayam Main Road, Coimbatore –
-                  641 006.
-                </p>
-                <div className="mt-2 inline-block rounded-md bg-amber-50 px-2 py-0.5 text-[10px] font-semibold text-amber-700">
-                  Landmark: Next to SBI Bank
-                </div>
-              </div>
-              <div className="mt-5 border-t border-slate-100 pt-3 text-[11px] font-semibold text-slate-400">
-                Live demo units available
-              </div>
-            </div>
-          </Reveal>
-
-          {/* Factory Card */}
-          <Reveal delay={240}>
-            <div className="group relative flex h-full flex-col justify-between rounded-3xl border border-white/70 bg-white/70 p-6 shadow-[0_10px_30px_-15px_rgba(0,0,0,0.06)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-brand/30 hover:bg-white/90 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.12)]">
-              <div>
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-100 text-steel-dark transition-transform duration-300 group-hover:scale-110">
-                  <Factory className="h-5 w-5" />
-                </div>
-                <h3 className="mt-5 font-display text-base font-bold text-steel-dark">
-                  Manufacturing Unit
-                </h3>
-                <p className="mt-2 text-xs leading-relaxed text-slate-600">
-                  42B, Chinthamani Nagar, Avarampalayam, Coimbatore – 641 006.
-                </p>
-                <div className="mt-2 inline-block rounded-md bg-slate-100 px-2 py-0.5 text-[10px] font-semibold text-slate-600">
-                  SS 304 Fabrication Facility
-                </div>
-              </div>
-              <div className="mt-5 border-t border-slate-100 pt-3 text-[11px] font-semibold text-slate-400">
-                Custom engineering workshop
-              </div>
-            </div>
-          </Reveal>
-        </div>
-
-        {/* Interactive Glass Quote Form & Map Row */}
-        <Reveal className="mt-8">
-          <div className="grid gap-8 lg:grid-cols-12">
-            {/* Form Column */}
-            <div className="relative overflow-hidden rounded-[2.5rem] border border-white/80 bg-white/80 p-8 shadow-[0_25px_60px_-20px_rgba(0,0,0,0.08)] backdrop-blur-2xl md:p-12 lg:col-span-7">
-              <div className="flex items-center gap-2">
-                <span className="h-2 w-2 rounded-full bg-brand" />
-                <p className="text-xs font-bold uppercase tracking-[0.2em] text-brand">
-                  Quick Quotation
-                </p>
-              </div>
-              <h2 className="mt-2 font-display text-2xl font-bold tracking-tight text-steel-dark md:text-3xl">
-                Tell us your requirement
-              </h2>
-              <p className="mt-2 text-xs leading-relaxed text-slate-500 md:text-sm">
-                Fill in your details and click submit. We instantly prepare and
-                format your inquiry into WhatsApp without delays.
-              </p>
-
-              <form onSubmit={submit} className="mt-8 space-y-4">
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-bold uppercase tracking-wider text-slate-600">
-                      Your Name
-                    </label>
-                    <input
-                      required
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      placeholder="e.g. Ramesh"
-                      className="w-full rounded-2xl border border-slate-200/80 bg-white/60 px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 backdrop-blur-md outline-none transition-all focus:border-brand focus:bg-white focus:ring-4 focus:ring-brand/10"
-                    />
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-bold uppercase tracking-wider text-slate-600">
-                      Phone Number
-                    </label>
-                    <input
-                      required
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
-                      placeholder="e.g. 98765 43210"
-                      className="w-full rounded-2xl border border-slate-200/80 bg-white/60 px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 backdrop-blur-md outline-none transition-all focus:border-brand focus:bg-white focus:ring-4 focus:ring-brand/10"
-                    />
-                  </div>
+            {/* WHATSAPP */}
+            <Reveal delay={100}>
+              <div className="flex h-full gap-4 rounded-2xl border border-slate-200 bg-white p-5 transition-all duration-300 hover:-translate-y-1 hover:border-red-200 hover:shadow-lg hover:shadow-red-100/50">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-red-50 text-red-600">
+                  <MessageCircle size={20} />
                 </div>
 
-                <div className="space-y-1.5">
-                  <label className="text-xs font-bold uppercase tracking-wider text-slate-600">
-                    Machine Interested In
-                  </label>
-                  <select
-                    value={machine}
-                    onChange={(e) => setMachine(e.target.value)}
-                    className="w-full rounded-2xl border border-slate-200/80 bg-white/60 px-4 py-3 text-sm text-slate-900 backdrop-blur-md outline-none transition-all focus:border-brand focus:bg-white focus:ring-4 focus:ring-brand/10"
+                <div>
+                  <h3 className="text-sm font-bold text-[#171717]">
+                    WhatsApp Support
+                  </h3>
+                  <p className="mt-2 text-xs leading-6 text-slate-500">
+                    Get product information, quotations and quick assistance.
+                  </p>
+                  <a
+                    href={waLink("Hello Athiyan Food Machines!")}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-3 inline-flex items-center gap-1.5 text-xs font-bold text-red-600 hover:text-red-700"
                   >
-                    <option value="">Select a machine (optional)</option>
-                    {units.map((u) => (
-                      <optgroup key={u.id} label={u.name}>
-                        {u.products.map((p) => (
-                          <option key={p.img} value={p.name}>
-                            {p.name}
-                          </option>
-                        ))}
-                      </optgroup>
-                    ))}
-                  </select>
+                    Chat with us <ArrowUpRight size={14} />
+                  </a>
+                </div>
+              </div>
+            </Reveal>
+
+            {/* SHOWROOM */}
+            <Reveal delay={150}>
+              <div className="flex h-full gap-4 rounded-2xl border border-slate-200 bg-white p-5 transition-all duration-300 hover:-translate-y-1 hover:border-red-200 hover:shadow-lg hover:shadow-red-100/50">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-red-50 text-red-600">
+                  <Building2 size={20} />
                 </div>
 
-                <div className="space-y-1.5">
-                  <label className="text-xs font-bold uppercase tracking-wider text-slate-600">
-                    Capacity & Specific Requirements
-                  </label>
-                  <textarea
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    rows={4}
-                    placeholder="E.g., 50 kg/hr capacity, gas heated, for cloud kitchen..."
-                    className="w-full rounded-2xl border border-slate-200/80 bg-white/60 px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 backdrop-blur-md outline-none transition-all focus:border-brand focus:bg-white focus:ring-4 focus:ring-brand/10"
-                  />
+                <div>
+                  <h3 className="text-sm font-bold text-[#171717]">
+                    Showroom
+                  </h3>
+                  <p className="mt-2 text-xs leading-6 text-slate-500">
+                    33/1, Krishnarayapuram, Avarampalayam Main Road,
+                    Coimbatore – 641 006.
+                  </p>
+                  <p className="mt-2 text-[10px] font-semibold text-red-600">
+                    Next to SBI Bank
+                  </p>
+                </div>
+              </div>
+            </Reveal>
+
+            {/* FACTORY */}
+            <Reveal delay={200}>
+              <div className="flex h-full gap-4 rounded-2xl border border-slate-200 bg-white p-5 transition-all duration-300 hover:-translate-y-1 hover:border-red-200 hover:shadow-lg hover:shadow-red-100/50">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-red-50 text-red-600">
+                  <Factory size={20} />
                 </div>
 
-                <button
-                  type="submit"
-                  className="group inline-flex w-full items-center justify-center gap-2.5 rounded-2xl bg-[#25D366] px-6 py-4 text-sm font-bold text-white shadow-lg shadow-emerald-500/25 transition-all duration-300 hover:scale-[1.01] hover:bg-[#20ba59] hover:shadow-xl hover:shadow-emerald-500/30 sm:w-auto"
-                >
-                  <Send className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-                  Forward Enquiry to WhatsApp
-                </button>
-              </form>
-            </div>
-
-            {/* Map Column */}
-            <div className="flex flex-col justify-between overflow-hidden rounded-[2.5rem] border border-white/20 bg-steel-dark p-8 text-white shadow-2xl backdrop-blur-2xl md:p-10 lg:col-span-5">
-              <div>
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-white backdrop-blur-md">
-                  <Navigation className="h-6 w-6 text-brand" />
+                <div>
+                  <h3 className="text-sm font-bold text-[#171717]">
+                    Manufacturing Unit
+                  </h3>
+                  <p className="mt-2 text-xs leading-6 text-slate-500">
+                    42B, Chinthamani Nagar, Avarampalayam,
+                    Coimbatore – 641 006.
+                  </p>
+                  <p className="mt-2 text-[10px] font-semibold text-red-600">
+                    SS304 Fabrication Facility
+                  </p>
                 </div>
-                <h3 className="mt-6 font-display text-2xl font-bold tracking-tight">
-                  Visit Coimbatore Showroom
-                </h3>
-                <p className="mt-3 text-xs leading-relaxed text-slate-300 md:text-sm">
-                  We welcome factory visits and demonstrations. Inspect machine
-                  thickness, motor horsepower, and weld quality in person before
-                  ordering.
+              </div>
+            </Reveal>
+          </div>
+
+          {/* FORM + MAPS IN ONE COMBINED AREA */}
+          <div className="grid items-stretch gap-5 lg:grid-cols-2">
+
+            {/* ENQUIRY FORM */}
+            <Reveal delay={100}>
+              <div className="h-full rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+                <div className="flex items-center justify-between gap-3">
+                  <div>
+                    <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-red-600">
+                      Quick Enquiry
+                    </p>
+                    <h2 className="mt-2 text-2xl font-bold tracking-tight text-[#171717]">
+                      Send Your Requirement
+                    </h2>
+                  </div>
+
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-red-50 text-red-600">
+                    <Send size={21} />
+                  </div>
+                </div>
+
+                <p className="mt-3 text-xs leading-6 text-slate-500">
+                  Share your details and our team will receive your enquiry
+                  through WhatsApp.
                 </p>
 
-                <div className="mt-8 space-y-4 rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-md">
-                  <div className="flex items-start gap-3">
-                    <MapPin className="mt-1 h-5 w-5 shrink-0 text-brand" />
-                    <div className="text-xs leading-relaxed text-slate-300">
-                      <strong className="block text-white">Main Office:</strong>
-                      33/1, Krishnarayapuram, Avarampalayam Main Road, Coimbatore –
-                      641 006. (Adjacent to SBI Bank)
+                <form onSubmit={submit} className="mt-6 space-y-4">
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <div>
+                      <label
+                        htmlFor="contact-name"
+                        className="mb-2 block text-xs font-bold text-slate-700"
+                      >
+                        Your Name *
+                      </label>
+                      <input
+                        id="contact-name"
+                        required
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        placeholder="Enter your name"
+                        className="w-full rounded-xl border border-slate-200 bg-[#fafafa] px-4 py-3 text-sm outline-none transition-all placeholder:text-slate-400 focus:border-red-400 focus:bg-white focus:ring-4 focus:ring-red-500/10"
+                      />
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="contact-phone"
+                        className="mb-2 block text-xs font-bold text-slate-700"
+                      >
+                        Phone Number *
+                      </label>
+                      <input
+                        id="contact-phone"
+                        type="tel"
+                        required
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                        placeholder="Enter phone number"
+                        className="w-full rounded-xl border border-slate-200 bg-[#fafafa] px-4 py-3 text-sm outline-none transition-all placeholder:text-slate-400 focus:border-red-400 focus:bg-white focus:ring-4 focus:ring-red-500/10"
+                      />
                     </div>
                   </div>
+
+                  <div>
+                    <label
+                      htmlFor="contact-machine"
+                      className="mb-2 block text-xs font-bold text-slate-700"
+                    >
+                      Machine Interested In
+                    </label>
+                    <select
+                      id="contact-machine"
+                      value={machine}
+                      onChange={(e) => setMachine(e.target.value)}
+                      className="w-full rounded-xl border border-slate-200 bg-[#fafafa] px-4 py-3 text-sm outline-none transition-all focus:border-red-400 focus:bg-white focus:ring-4 focus:ring-red-500/10"
+                    >
+                      <option value="">Select a machine (optional)</option>
+                      {units.map((unit) => (
+                        <optgroup key={unit.id} label={unit.name}>
+                          {unit.products.map((product) => (
+                            <option
+                              key={`${unit.id}-${product.name}`}
+                              value={product.name}
+                            >
+                              {product.name}
+                            </option>
+                          ))}
+                        </optgroup>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="contact-message"
+                      className="mb-2 block text-xs font-bold text-slate-700"
+                    >
+                      Your Requirements
+                    </label>
+                    <textarea
+                      id="contact-message"
+                      value={message}
+                      onChange={(e) => setMessage(e.target.value)}
+                      rows={3}
+                      placeholder="Capacity, machine type or other requirements..."
+                      className="w-full resize-y rounded-xl border border-slate-200 bg-[#fafafa] px-4 py-3 text-sm outline-none transition-all placeholder:text-slate-400 focus:border-red-400 focus:bg-white focus:ring-4 focus:ring-red-500/10"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="group inline-flex w-full items-center justify-center gap-2.5 rounded-xl bg-red-600 px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-red-600/15 transition-all duration-300 hover:-translate-y-0.5 hover:bg-red-700 hover:shadow-red-600/25"
+                  >
+                    <Send size={16} />
+                    Send Enquiry on WhatsApp
+                    <ArrowRight
+                      size={16}
+                      className="transition-transform group-hover:translate-x-1"
+                    />
+                  </button>
+                </form>
+              </div>
+            </Reveal>
+
+            {/* BOTH MAPS */}
+            <Reveal delay={150}>
+              <div className="flex h-full flex-col rounded-3xl border border-slate-200 bg-white p-5 shadow-sm sm:p-7">
+                <div className="mb-5">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-red-600">
+                    Our Locations
+                  </p>
+                  <h2 className="mt-2 text-2xl font-bold tracking-tight text-[#171717]">
+                    Find Us on Map
+                  </h2>
+                  <p className="mt-2 text-xs leading-6 text-slate-500">
+                    Visit our showroom or manufacturing unit in Coimbatore.
+                  </p>
+                </div>
+
+                <div className="grid flex-1 gap-4 sm:grid-cols-2">
+                  {locations.map((location) => {
+                    const Icon = location.icon;
+
+                    return (
+                      <div
+                        key={location.title}
+                        className="overflow-hidden rounded-2xl border border-slate-200 bg-[#fafafa]"
+                      >
+                        <div className="flex items-center gap-2.5 p-3.5">
+                          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-red-50 text-red-600">
+                            <Icon size={17} />
+                          </div>
+                          <div className="min-w-0">
+                            <h3 className="text-xs font-bold text-[#171717]">
+                              {location.title}
+                            </h3>
+                            <p className="mt-0.5 text-[10px] text-slate-500">
+                              Coimbatore, Tamil Nadu
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="h-[190px] overflow-hidden bg-slate-100">
+                          <iframe
+                            title={`${location.title} Google Map`}
+                            src={location.map}
+                            width="100%"
+                            height="100%"
+                            style={{ border: 0 }}
+                            loading="lazy"
+                            referrerPolicy="no-referrer-when-downgrade"
+                            allowFullScreen
+                          />
+                        </div>
+
+                        <div className="p-3.5">
+                          <p className="min-h-[55px] text-[11px] leading-5 text-slate-500">
+                            {location.address}
+                          </p>
+
+                          <a
+                            href={location.direction}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="mt-3 inline-flex items-center gap-1.5 text-xs font-bold text-red-600 transition-all hover:gap-2.5"
+                          >
+                            <Navigation size={13} />
+                            Get Directions
+                            <ArrowUpRight size={13} />
+                          </a>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
-
-              <div className="mt-8">
-                <a
-                  href={MAPS_LINK}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="group flex w-full items-center justify-center gap-2 rounded-2xl border border-white/20 bg-white/10 px-6 py-3.5 text-xs font-bold text-white backdrop-blur-md transition-all duration-200 hover:bg-white hover:text-steel-dark"
-                >
-                  <MapPin className="h-4 w-4 text-brand group-hover:text-steel-dark" />
-                  Get Google Maps Route
-                </a>
-              </div>
-            </div>
+            </Reveal>
           </div>
-        </Reveal>
+
+          {/* SMALL BOTTOM NOTE */}
+          <Reveal delay={100}>
+            <div className="mt-6 flex flex-col items-center justify-between gap-3 rounded-2xl border border-red-100 bg-red-50/70 px-5 py-4 sm:flex-row">
+              <p className="text-center text-xs font-medium text-slate-600 sm:text-left">
+                Have questions about our machinery? Our team is ready to assist.
+              </p>
+
+              <a
+                href={MAPS_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex shrink-0 items-center gap-2 text-xs font-bold text-red-600 transition-colors hover:text-red-800"
+              >
+                Visit Our Showroom
+                <ArrowUpRight size={14} />
+              </a>
+            </div>
+          </Reveal>
+
+        </div>
       </section>
-    </div>
+    </main>
   );
 }

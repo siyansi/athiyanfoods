@@ -865,7 +865,7 @@ const [currentIdx, setCurrentIdx] = useState(0);
 
 
   {/* ---------------- Best Sellers ---------------- */}
-  <section className="mx-auto max-w-7xl px-6 py-20">
+  <section className="mx-auto max-w-7xl px-6 py-6">
 
     <Reveal className="flex flex-wrap items-end justify-between gap-4">
       <div>
@@ -925,30 +925,91 @@ const [currentIdx, setCurrentIdx] = useState(0);
 
 
   {/* ---------------- Customers Band ---------------- */}
-  <section className="border-y border-brand/10 bg-brand-soft/60 py-14">
-    <div className="mx-auto max-w-5xl px-6 text-center">
+ 
+{/* ================= TRUSTED INDUSTRIES ================= */}
+<section className="relative overflow-hidden border-y border-red-100/70 bg-[#fffafa] py-16 sm:py-">
 
-      <Reveal>
-        <h2 className="font-display text-2xl font-bold text-steel-dark md:text-3xl">
-          Trusted by Businesses Across Tamil Nadu
-        </h2>
+  <div className="pointer-events-none absolute -right-20 top-0 h-72 w-72 rounded-full bg-red-100/60 blur-[100px]" />
+  <div className="pointer-events-none absolute -left-20 bottom-0 h-64 w-64 rounded-full bg-orange-100/60 blur-[100px]" />
 
-        <p className="mx-auto mt-4 max-w-3xl text-sm leading-relaxed text-muted-foreground md:text-base">
-          We are grateful to the customers who trust Athiyan Food Machines for
-          their food processing and commercial kitchen needs —{" "}
-          <span className="font-semibold text-foreground">
-            Hotels, Restaurants, Catering Units, Cloud Kitchens, Food
-            Manufacturers, Bakeries, Central Kitchens and Food Entrepreneurs.
-          </span>
-        </p>
-      </Reveal>
+  <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
+
+    <Reveal className="mx-auto max-w-2xl text-center">
+      <span className="inline-flex items-center gap-2 rounded-full border border-red-100 bg-white px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-red-600 shadow-sm">
+        <ShieldCheck className="h-4 w-4" />
+        Trusted Across Industries
+      </span>
+
+      <h2 className="mt-5 font-display text-3xl font-black tracking-tight text-[#172337] sm:text-4xl">
+        Powering Businesses.
+        <span className="text-red-600"> Building Trust.</span>
+      </h2>
+
+      <p className="mx-auto mt-4 max-w-xl text-sm leading-7 text-slate-500 sm:text-base">
+        From everyday commercial kitchens to large-scale food production,
+        our machinery supports businesses at every stage of growth.
+      </p>
+    </Reveal>
+
+    <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+
+      {[
+        { icon: "🍽️", title: "Hotels", desc: "Commercial kitchens" },
+        { icon: "🥘", title: "Restaurants", desc: "Food preparation" },
+        { icon: "👨‍🍳", title: "Catering", desc: "Bulk production" },
+        { icon: "🏭", title: "Manufacturers", desc: "Food processing" },
+        { icon: "🥐", title: "Bakeries", desc: "Bakery production" },
+        { icon: "☁️", title: "Cloud Kitchens", desc: "Modern food units" },
+      ].map((item, i) => (
+        <Reveal key={item.title} delay={i * 60}>
+          <div className="group h-full rounded-2xl border border-red-100/80 bg-white p-4 text-center shadow-sm transition-all duration-300 hover:-translate-y-2 hover:border-red-200 hover:shadow-[0_18px_35px_-18px_rgba(220,38,38,0.28)] sm:p-5">
+
+            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-red-50 text-2xl transition-all duration-300 group-hover:scale-110 group-hover:bg-red-600 group-hover:shadow-lg group-hover:shadow-red-600/20">
+              <span className="transition-transform duration-300 group-hover:scale-110">
+                {item.icon}
+              </span>
+            </div>
+
+            <h3 className="mt-4 text-xs font-bold text-[#172337] transition-colors group-hover:text-red-600 sm:text-sm">
+              {item.title}
+            </h3>
+
+            <p className="mt-1.5 text-[10px] text-slate-400 sm:text-xs">
+              {item.desc}
+            </p>
+
+          </div>
+        </Reveal>
+      ))}
 
     </div>
-  </section>
+
+    <Reveal delay={300}>
+      <div className="mt-10 flex flex-wrap items-center justify-center gap-3 text-xs font-semibold text-slate-500">
+        <span className="flex items-center gap-2">
+          <CheckCircle2 className="h-4 w-4 text-red-600" />
+          Quality Engineering
+        </span>
+        <span className="h-1 w-1 rounded-full bg-red-300" />
+        <span className="flex items-center gap-2">
+          <CheckCircle2 className="h-4 w-4 text-red-600" />
+          Reliable Performance
+        </span>
+        <span className="h-1 w-1 rounded-full bg-red-300" />
+        <span className="flex items-center gap-2">
+          <CheckCircle2 className="h-4 w-4 text-red-600" />
+          Customer Support
+        </span>
+      </div>
+    </Reveal>
+
+  </div>
+</section>
+
 
 
   {/* ---------------- CTA ---------------- */}
-  <section className="mx-auto max-w-7xl px-6 py-16">
+  <section className="mx-auto max-w-7xl px-6 py-6">
 
     <Reveal>
       <div className="relative overflow-hidden rounded-3xl border border-brand/15 bg-gradient-to-b from-brand-soft to-white px-8 py-12 text-center md:py-16">
